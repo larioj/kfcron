@@ -1,0 +1,5 @@
+.stack-work/
+kanbanflow.cabal
+*~
+notes.txt
+personal.yaml
