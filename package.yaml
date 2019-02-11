@@ -1,6 +1,6 @@
-name:                kanbanflow
+name:                kfcron
 version:             0.1.0.0
-github:              "larioj/kanbanflow"
+github:              "larioj/kfcron"
 license:             BSD3
 author:              "Jesus E. Larios Murillo"
 maintainer:          "preparedfortherain@gmail.com"
@@ -17,7 +17,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/larioj/kanbanflow#readme>
+description:         Please see the README on GitHub at <https://github.com/larioj/kfcron#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -35,7 +35,7 @@ library:
   source-dirs: src
 
 executables:
-  kanbanflow:
+  kfcron:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -43,10 +43,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - kanbanflow
+    - kfcron
 
 tests:
-  kanbanflow-test:
+  kfcron-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -54,4 +54,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - kanbanflow
+    - kfcron

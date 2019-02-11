@@ -1,5 +1,5 @@
 .stack-work/
-kanbanflow.cabal
+kfcron.cabal
 *~
 notes.txt
 personal.yaml

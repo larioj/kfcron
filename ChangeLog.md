@@ -1,3 +1,3 @@
-# Changelog for kanbanflow
+# Changelog for kfcron
 
 ## Unreleased changes
