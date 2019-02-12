@@ -2,6 +2,8 @@
 
 module Main where
 
+import Data.Time.LocalTime (TimeZone, getCurrentTimeZone, utcToLocalTime)
+import Data.Time.Format (formatTime, defaultTimeLocale)
 import           Control.Concurrent (threadDelay)
 import           Control.Monad      (when)
 import           Data.Foldable      (for_)
@@ -29,6 +31,10 @@ main = do
   blueprint <- maybe (fail "unable to load blueprint") pure (maybeBlueprint)
   now <- getCurrentTime
   execBlueprint blueprintPath blueprint now
+
+showTime :: TimeZone -> UTCTime -> String
+showTime zone t =
+  formatTime defaultTimeLocale "%c" (utcToLocalTime zone t)
 
 loadBlueprint :: FilePath -> IO (Maybe Blueprint)
 loadBlueprint path = do
@@ -59,10 +65,11 @@ execBlueprint blueprintPath oldBlueprint execTime = do
   blueprint@(Blueprint token tasks) <-
     fmap (fromMaybe oldBlueprint) (loadBlueprint blueprintPath)
   board <- Board.load token
+  now <- getCurrentTime
   for_ tasks $ \task ->
     when (scheduleMatches (schedule task) execTime) $ do
-      putStr "Creating Task: "
-      putStrLn $ show task
+      t <- showTime <$> getCurrentTimeZone <*> getCurrentTime
+      putStrLn $ "[" <> t <> "] Creating Task: " <> show task
       Task.create token board task
       return ()
   now <- getCurrentTime
