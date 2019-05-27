@@ -21,3 +21,16 @@ tasks:
   category: Graduate School
   schedule: '0 0 * * *'
 ```
+
+## Full Documentaion
+[kfcron-docs repo](https://github.com/larioj/kfcron-docs)
+
+## Build
+    $ stack build
+    $ stack install
+
+## Development
+    : tabe docs/dev.md
+
+### Set up docs
+    $ git submodule add https://github.com/larioj/kfcron-docs.git docs
