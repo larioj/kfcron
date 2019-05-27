@@ -8,8 +8,7 @@ import           KanbanFlow.Token (Token)
 import           KfCron.Task      (Task)
 
 data Blueprint = Blueprint
-  { token :: Token
-  , tasks :: [Task]
+  { tasks :: [Task]
   } deriving (Generic, Show, Eq)
 
 instance FromJSON Blueprint
