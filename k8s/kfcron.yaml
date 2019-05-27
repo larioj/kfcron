@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kfcron
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kfcron
+  template:
+    metadata:
+      labels:
+        app: kfcron
+    spec:
+      containers:
+      - name: kfcron
+        image: larioj/kfcron:533c385 # $ git rev-parse --short HEAD
+        command: [
+          "kfcron",
+          "/mnt/kfcron-config/tasks.yaml",
+          "/mnt/kfcron-token/token.txt"
+        ]
+        volumeMounts:
+        - name: kfcron-config
+          mountPath: /mnt/kfcron-config
+        - name: kfcron-token
+          mountPath: /mnt/kfcron-token
+      - name: git-sync
+        image: openweb/git-sync:0.0.1
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://github.com/larioj/kfcron-work-schedule.git
+        - name: GIT_SYNC_DEST
+          value: /git
+        - name: GIT_SYNC_BRANCH
+          value: master
+        - name: GIT_SYNC_REV
+          value: FETCH_HEAD
+        - name: GIT_SYNC_WAIT
+          value: "30"
+        volumeMounts:
+        - name: kfcron-config
+          mountPath: /git
+      volumes:
+      - name: kfcron-config
+        gitRepo:
+          repository: https://github.com/larioj/kfcron-work-schedule.git
+          revision: master
+          directory: .
+      - name: kfcron-token
+        secret:
+          secretName : kfcron-token
+          items:
+          - key: token.txt
+            path: token.txt
